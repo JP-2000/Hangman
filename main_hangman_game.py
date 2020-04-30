@@ -960,7 +960,7 @@ while game_loop:
                         else:
                             if sound == 'on':
                                 wrong_key_sound.play()
-                                hearts_counter += 1
+                            hearts_counter += 1
         pygame.display.update()
 
     
