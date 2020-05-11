@@ -1,16 +1,21 @@
+import os
 import csv
 import random
 
 emvlist=[]
 hmvlist=[]
 
-with open('e_list.csv') as f:
+d = os.getcwd()
+
+fname_1 = os.path.join(d, "e_list.csv")
+with open(fname_1) as f:
 	r=csv.reader(f)
 	count=0
 	for row in r:
 		emvlist=row
 
-with open('h_list.csv') as f:
+fname_2 = os.path.join(d, "h_listh.csv")
+with open(fname_2) as f:  cause the way 
 	r=csv.reader(f)
 	count=0
 	for row in r:

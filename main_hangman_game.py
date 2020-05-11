@@ -1,4 +1,4 @@
-from movieslists import emvlist, hmvlist
+from movies.movieslists import emvlist, hmvlist
 import pygame 
 from pygame import mixer
 import random
