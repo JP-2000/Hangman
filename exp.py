@@ -1,4 +1,6 @@
-from movies.movieslists import emvlist, hmvlist
 
-print(emvlist)
-print(hmvlist)
+
+d = "C:/Users/Jiten Patel/Desktop/hangman/images/"
+y = d + "hola"
+
+print(y)

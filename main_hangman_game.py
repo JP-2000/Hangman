@@ -1,3 +1,5 @@
+import os 
+import sys
 from movies.movieslists import emvlist, hmvlist
 import pygame 
 from pygame import mixer
@@ -6,6 +8,7 @@ from pygame  import *
 import string
 import cv2 
 import numpy as np 
+
 # initializing pygame
 pygame.init()
 
@@ -15,33 +18,40 @@ clock = pygame.time.Clock()
 # setting screen 
 screen = pygame.display.set_mode((800,600))
 
+# addresses
+images_address = "C:/Users/Jiten Patel/Desktop/hangman/images/"
+audio_address = "C:/Users/Jiten Patel/Desktop/hangman/audio/"
+fonts_address = "C:/Users/Jiten Patel/Desktop/hangman/fonts/"
+
+
 #music and  sounds
-mixer.music.load('bg_music.mp3')
+mixer.music.load(audio_address + 'bg_music.mp3')
 mixer.music.play(-1)
 pygame.mixer.set_num_channels(8)
-mouse_pressed_sound = mixer.Sound('mouse_pressed.wav')
-sound_sound = mixer.Sound('sound_sound.wav')
+
+mouse_pressed_sound = mixer.Sound(audio_address + 'mouse_pressed.wav')
+sound_sound = mixer.Sound(audio_address + 'sound_sound.wav')
 channel_1 = pygame.mixer.Channel(5)
 
                     #frame_1
-f_1_hangman_sound = mixer.Sound('hover.wav')
-hover_counter_1f_1_hover_sound_1 = mixer.Sound('hover.wav')
-f_1_hover_sound_1 = mixer.Sound('hover.wav')
-f_1_hover_sound_2 = mixer.Sound('hover.wav')
+f_1_hangman_sound = mixer.Sound(audio_address + 'hover.wav')
+hover_counter_1f_1_hover_sound_1 = mixer.Sound(audio_address + 'hover.wav')
+f_1_hover_sound_1 = mixer.Sound(audio_address + 'hover.wav')
+f_1_hover_sound_2 = mixer.Sound(audio_address + 'hover.wav')
 
                     #frame_2
-f_2_hover_sound_1 = mixer.Sound('hover.wav')
-f_2_hover_sound_2 = mixer.Sound('hover.wav')
-mouse_pressed_sound = mixer.Sound('mouse_pressed.wav')
+f_2_hover_sound_1 = mixer.Sound(audio_address + 'hover.wav')
+f_2_hover_sound_2 = mixer.Sound(audio_address + 'hover.wav')
+
 
                     #frame_3
-correct_key_sound = mixer.Sound('correct_key.wav')
-wrong_key_sound = mixer.Sound('wrong_key.wav')
-coffin_dance_loop_sound = mixer.Sound('coffin_dance.wav')
+correct_key_sound = mixer.Sound(audio_address + 'correct_key.wav')
+wrong_key_sound = mixer.Sound(audio_address + 'wrong_key.wav')
+coffin_dance_loop_sound = mixer.Sound(audio_address + 'coffin_dance.wav')
 
 # title and icon for screen
 pygame.display.set_caption('Hangman movies editn')
-icon=pygame.image.load('hangman_icon.png')
+icon=pygame.image.load(images_address + 'hangman_icon.png')
 pygame.display.set_icon(icon)
 
 sound = 'on'
@@ -49,31 +59,31 @@ game_loop = True
 while game_loop:
 
     #backgroud image 
-    bg = ['mornin.png', 'sunny.png', 'eve.png', 'night.jpg']
-    bg_blur = ['mornin_blur.jpg', 'sunny_blur.jpg', 'eve_blur.jpg', 'night_blur.jpg']
-    n = random.randint(0, 3)
+    bg = [images_address + 'mornin.png', images_address + 'sunny.png', images_address + 'eve.png', images_address + 'night.jpg']
+    bg_blur = [images_address + 'mornin_blur.jpg', images_address + 'sunny_blur.jpg', images_address + 'eve_blur.jpg', images_address + 'night_blur.jpg']
+    n = random.randint(0, 3) 
     background_img = pygame.image.load(bg[n])
     frame_4_bg_img = pygame.image.load(bg_blur[n])
 
     ############################################ BUTTONS ################################################### 
 
     # button images
-    button_3_img = pygame.image.load('1_button_3.png')
-    button_2_img = pygame.image.load('1_button_2.png')
-    button_1_img = pygame.image.load('1_button_1.png')
-    button_4_img = pygame.image.load('1_button_4.png')
-    sound_button_1_img = pygame.image.load('sound_button_1.png')
-    sound_button_2_img = pygame.image.load('sound_button_2.png')
+    button_3_img = pygame.image.load(images_address + '1_button_3.png')
+    button_2_img = pygame.image.load(images_address + '1_button_2.png')
+    button_1_img = pygame.image.load(images_address + '1_button_1.png')
+    button_4_img = pygame.image.load(images_address + '1_button_4.png')
+    sound_button_1_img = pygame.image.load(images_address + 'sound_button_1.png')
+    sound_button_2_img = pygame.image.load(images_address + 'sound_button_2.png')
 
     # button text fonts
-    b_font_1 = pygame.font.Font('Squiborn DEMO.ttf', 30)
-    b_font_2 = pygame.font.Font('Squiborn DEMO.ttf', 35)
-    b_font_3 = pygame.font.Font('Squiborn DEMO.ttf', 50)
+    b_font_1 = pygame.font.Font(fonts_address + 'Squiborn DEMO.ttf', 30)
+    b_font_2 = pygame.font.Font(fonts_address + 'Squiborn DEMO.ttf', 35)
+    b_font_3 = pygame.font.Font(fonts_address + 'Squiborn DEMO.ttf', 50)
 
     ############################################ frame_1 ##################################################
 
     # hangman name
-    hangman_font = pygame.font.Font('Bombtrack Demo.ttf', 150)
+    hangman_font = pygame.font.Font(fonts_address + 'BombtrackDemo.ttf', 150)
     hangman_x = 0
     hangman_y = 0 
     hangman_y_change = 10
@@ -82,7 +92,7 @@ while game_loop:
     def frame_1(mouse_pressed, hangman_font, mouse, button_1_img, button_2_img, button_3_img, button_4_img, b_font_1, b_font_2, sound_button_1_img, sound_button_2_img, f_1_hangman_sound, f_1_hover_sound_1, f_1_hover_sound_2, mouse_pressed_sound, sound_sound):
 
         #global variables
-        global hangman_count, frame, sound, hangman_x, hangman_y, hangman_x_change, hangman_y_change, held, f_1_hover_counter_1, f_1_hover_counter_2  
+        global hangman_count, frame, sound, hangman_x, hangman_y, hangman_x_change, hangman_y_change, held, f_1_hover_counter_1, f_1_hover_counter_2 
 
         # Hangman_Display
         hangman_y += hangman_y_change
@@ -186,7 +196,8 @@ while game_loop:
             if (mouse_pressed[0] == 1):
                 if  held == False:
                     if sound == 'on':
-                        mouse_pressed_sound.play()
+                    	print('1')
+                    	mouse_pressed_sound.play()
                     pygame.time.delay(500)
                     frame = 2
                 held = True
@@ -330,15 +341,15 @@ while game_loop:
 
     ######################################################## Frame_3 #############################################################
     #FONTS
-    font_1_3 = pygame.font.Font('Choco Bear.otf', 50) 
-    font_2_3 = pygame.font.Font('Choco Bear.otf', 30)
-    font_3_3 = pygame.font.Font('JMH Typewriter.ttf', 40)
+    font_1_3 = pygame.font.Font(fonts_address + 'Choco Bear.otf', 50) 
+    font_2_3 = pygame.font.Font(fonts_address + 'Choco Bear.otf', 30)
+    font_3_3 = pygame.font.Font(fonts_address + 'JMH Typewriter.ttf', 40)
     
     #IMAGES 
-    menu_1_img = pygame.image.load('menu_1.png')
-    menu_2_img = pygame.image.load('menu_2.png')
-    heart_alive_img = pygame.image.load('heart_alive.png')
-    heart_ded_img = pygame.image.load('heart_ded.png')
+    menu_1_img = pygame.image.load(images_address + 'menu_1.png')
+    menu_2_img = pygame.image.load(images_address + 'menu_2.png')
+    heart_alive_img = pygame.image.load(images_address + 'heart_alive.png')
+    heart_ded_img = pygame.image.load(images_address + 'heart_ded.png')
 
     #MOVIE_SELECTION
     x = random.randrange(0, 100)
@@ -596,12 +607,12 @@ while game_loop:
     ####################################################################### Frame_4 #########################################################################################
 
     #IMAGES
-    home_img = pygame.image.load('home.png')
-    play_img = pygame.image.load('play.png')
-    quit_img = pygame.image.load('quit.png')
+    home_img = pygame.image.load(images_address + 'home.png')
+    play_img = pygame.image.load(images_address + 'play.png')
+    quit_img = pygame.image.load(images_address + 'quit.png')
 
     #FONTS
-    pause_font = pygame.font.Font('Bombtrack Demo.ttf', 100)
+    pause_font = pygame.font.Font(fonts_address + 'BombtrackDemo.ttf', 100)
 
     def frame_4(home_img, play_img, quit_img, pause_font,mouse_pressed, mouse, sound_button_1_img, sound_button_2_img, frame_4_bg_img, color, mouse_pressed_sound, sound_sound):
         
@@ -675,13 +686,13 @@ while game_loop:
     ############################################################ frame_5 ##################################################################################
 
     #IMAGES
-    nibba_img = pygame.image.load('nibba.png')
-    frame_5_bg_img = pygame.image.load('space.jpg')
+    nibba_img = pygame.image.load(images_address + 'nibba.png')
+    frame_5_bg_img = pygame.image.load(images_address + 'space.jpg')
 
     #FONTS
-    ded_font = pygame.font.Font('go3v2.ttf', 80)
-    f_5_button_font = pygame.font.Font('go3v2.ttf', 30)
-    ans_font = pygame.font.Font('JMH Typewriter.ttf', 20)
+    ded_font = pygame.font.Font(fonts_address + 'go3v2.ttf', 80)
+    f_5_button_font = pygame.font.Font(fonts_address + 'go3v2.ttf', 30)
+    ans_font = pygame.font.Font(fonts_address + 'JMH Typewriter.ttf', 20)
 
     #VARIABLES
     n_y = -500
@@ -772,13 +783,13 @@ while game_loop:
     ########################################################### frame_6 ###################################################################################
 
     #IMAGES
-    ok_img = pygame.image.load('ok.png')
-    party_img = pygame.image.load('party.png')
-    party_2_img = pygame.image.load('party_2.png')
-    circle_1_img = pygame.image.load('circle_1.png')
-    circle_2_img = pygame.image.load('circle_2.png')
-    rocket_img = pygame.image.load('rocket.png')
-    confetti_img = pygame.image.load('confetti.png')
+    ok_img = pygame.image.load(images_address + 'ok.png')
+    party_img = pygame.image.load(images_address + 'party.png')
+    party_2_img = pygame.image.load(images_address + 'party_2.png')
+    circle_1_img = pygame.image.load(images_address + 'circle_1.png')
+    circle_2_img = pygame.image.load(images_address + 'circle_2.png')
+    rocket_img = pygame.image.load(images_address + 'rocket.png')
+    confetti_img = pygame.image.load(images_address + 'confetti.png')
 
     shift_y = 600
 
