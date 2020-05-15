@@ -2,20 +2,19 @@ import os
 import csv
 import random
 
+
 emvlist=[]
 hmvlist=[]
 
-d = os.getcwd()
 
-fname_1 = os.path.join(d, "e_list.csv")
-with open(fname_1) as f:
+with open("C:/Users/Jiten Patel/Desktop/hangman/movies/e_list.csv") as f:
 	r=csv.reader(f)
 	count=0
 	for row in r:
 		emvlist=row
 
-fname_2 = os.path.join(d, "h_listh.csv")
-with open(fname_2) as f:  cause the way 
+
+with open("C:/Users/Jiten Patel/Desktop/hangman/movies/h_list.csv") as f: 
 	r=csv.reader(f)
 	count=0
 	for row in r:
@@ -73,6 +72,8 @@ for i in range (0, len(hmvlist)):
 	for  j in range(0, len(hmvlist[i])):
 		if ord(hmvlist[i][j]) >= 128:
 			print(hmvlist[i][j], hmvlist[i])
+
+
 print(len(emvlist))
 print(len(hmvlist))
 
